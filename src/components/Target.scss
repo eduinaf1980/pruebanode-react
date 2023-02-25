@@ -1,0 +1,42 @@
+.cardComponent {
+  position: relative;
+  width: 350px;
+  padding: 20px;
+  box-shadow: 3px 10px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  border: 0;
+
+  .circleComponent {
+    border-radius: 3px;
+    width: 70px;
+    height: 70px;
+    background: black;
+    position: absolute;
+    right: 0px;
+    top: 0;
+    background-image: linear-gradient(to top, #d58850 0%, #d1712d 100%);
+    border-bottom-left-radius: 170px;
+  }
+
+  .contentComponent {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  h2 {
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    font-weight: 300;
+  }
+
+  @media (max-width: 576px) {
+    width: 300px;
+  }
+}

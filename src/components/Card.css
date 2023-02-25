@@ -1,0 +1,95 @@
+.containerCardProfile {
+  background: #ffffff;
+  color: #000000;
+  border-radius: 5px;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 10px 20px -10px rgba(0, 0, 0, .75);
+  font-size: 15px;
+}
+
+.cover-photo {
+  background-color: #d58850;
+  height: 160px;
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+}
+
+.profile {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  margin: 93px 0 0 -175px;
+  border: 1px solid #1f1a32;
+  padding: 7px;
+  background: #d8d8d8;
+}
+
+.profile-name {
+  font-size: 25px;
+  font-weight: bold;
+  margin: 27px 0 0 120px;
+}
+
+.about {
+  margin-top: 35px;
+  line-height: 21px;
+}
+
+.follow-btn {
+  background: #6b6b6b82;
+  border: 1px solid #231e39;
+  padding: 10px 25px;
+  color: #231e39;
+  border-radius: 3px;
+  font-family: Montserrat, sans-serif;
+  cursor: pointer;
+}
+
+.follow-btn {
+  margin-left: 10px;
+  color: #0e0e0e;
+  font-weight: bold;
+  border: 1px solid #eb8a1b;
+}
+
+.follow-btn:hover {
+  color: #ffffff;
+  background: #d58850;
+  border: 1px solid #eb8a1b;
+  transition: .5s;
+}
+
+.containerCardProfile i {
+  padding-left: 20px;
+  font-size: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: .5s;
+}
+
+.containerCardProfile i:hover {
+  color: #231e39;
+}
+
+@media (max-width: 576px) {
+  .containerCardProfile {
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 10px 20px -10px rgba(0, 0, 0, .75);
+    font-size: 15px;
+  }
+  .profile-name {
+    font-size: 20px;
+  }
+  .profile {
+    height: 100px;
+    width: 100px;
+    margin: 53px 0 0 -135px;
+  }
+  .cover-photo {
+    height: 110px;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+  }
+}

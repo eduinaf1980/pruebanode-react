@@ -7,12 +7,11 @@ import {
   Form
 } from 'reactstrap';
 import TableTitle from '../../utils/TableTitle';
-import { InputTable, SwitchUpdate, SelectTable } from '../../utils/ComponentTable';
+import { InputTable, SelectTable } from '../../utils/ComponentTable';
 import API from '../../../api/index';
 import { useParams } from 'react-router-dom';
 import ActionsUpdate from '../../utils/ActionsUpdate';
 import { useNavigate } from 'react-router-dom';
-import { AlternateEmail } from '@material-ui/icons';
 
 
 const UpdateItemComponent = () => {
@@ -26,7 +25,6 @@ const UpdateItemComponent = () => {
   const [messageCode, setMessageCode] = useState('')
   const [company, setCompany] = useState('')
   const [companies, setCompanies] = useState([])
-  const [messageCompany, setMessageCompany] = useState('')
   const [messageError, setMessageError] = useState('')
 
   const getItem = async () => {
@@ -39,14 +37,9 @@ const UpdateItemComponent = () => {
     }
   }
 
-  const setMessageSuccess = (messageSuccess) => {
-    //dispatch(actionSetMessageSuccess(messageSuccess))
-  }
-
   const submit = async () => {
     setMessageDescription('')
     setMessageCode('')
-    setMessageSuccess('')
     const response = await API.Item.update({
       'id': id,
       'description': description,
@@ -54,16 +47,16 @@ const UpdateItemComponent = () => {
       'companies_id': company,
     })
     if (response.ok) {
-      setMessageSuccess(response.message)
       navigate('/item')
     } else {
-      if (response.errors) {
+      const errors = JSON.parse(response.message)
+      if (errors) {
         setError()
-        if (response.errors.name) {
-          setMessageDescription(response.errors.description[0])
+        if (errors.descripcion) {
+          setMessageDescription(errors.descripcion)
         }
-        if (response.errors.nit) {
-          setMessageCode(response.errors.code[0])
+        if (errors.codigo) {
+          setMessageCode(errors.codigo)
         }
       }
       if (response.message) {
@@ -95,7 +88,6 @@ const UpdateItemComponent = () => {
       setMessageError('')
     }, 5000);
   }
-
 
   useEffect(() => {
     getItem()
@@ -146,7 +138,7 @@ const UpdateItemComponent = () => {
                   value={code}
                 />
                 <SelectTable
-                messageInvalid={messageCompany}
+                messageInvalid={""}
                 title='Empresa'
                 options={companies}
                 value={company}

@@ -27,16 +27,6 @@ class Company {
     const response = await axios.delete(`${URL}/companies/${nit}`, config.configWithToken())
     return response.data
   }
-
-  async verifyNit (nit) {
-    const response = await axios.get(`${URL}/companies/nitcompanies/${nit}`, config.configWithToken())
-    return response.data
-  }
-
-  async verifyCompany (name) {
-    const response = await axios.get(`${URL}/companies/namecompanies/${name}`, config.configWithToken())
-    return response.data
-  }
 }
 
 export default new Company()

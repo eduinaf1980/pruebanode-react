@@ -7,7 +7,7 @@ import {
   Form
 } from 'reactstrap';
 import TableTitle from '../../utils/TableTitle';
-import { DateTable, InputTable, SelectTable } from '../../utils/ComponentTable';
+import { InputTable, SelectTable } from '../../utils/ComponentTable';
 import TableActions from '../../utils/TableActions';
 import API from '../../../api/index';
 import { useNavigate } from 'react-router-dom';
@@ -21,63 +21,27 @@ const CreateItemComponent = () => {
   const [messageCode, setMessageCode] = useState('')
   const [company, setCompany] = useState('')
   const [companies, setCompanies] = useState([])
-  const [messageCompany, setMessageCompany] = useState('')
-  const [disableSubmit, setDisableSubmit] = useState(false)
   const [messageError, setMessageError] = useState('')
-
-  /*const verifyNit = async (nit) => {
-    setDisableSubmit(false)
-
-    if (nit) {
-      const response = await API.Company.verifyNit(nit)
-
-      if (!response.ok) {
-        setMessageNit(response.message)
-        setDisableSubmit(true)
-      }
-    }
-  }
-
-  const verifyCompany = async (name) => {
-    setDisableSubmit(false)
-
-    if (name) {
-      const response = await API.Company.verifyCompany(name)
-
-      if (!response.ok) {
-        setMessageName(response.message)
-        setDisableSubmit(true)
-      }
-    }
-  }*/
-
-  const setMessageSuccess = (messageSuccess) => {
-    //dispatch(actionSetMessageSuccess(messageSuccess))
-  }
 
   const submit = async () => {
     setMessageDescription('')
     setMessageCode('')
-    setMessageSuccess('')
     const response = await API.Item.create({
       'description': description,
       'code': code,
       'companies_id': company
     })
     if (response.ok) {
-      setMessageSuccess(response.message)
       navigate('/item')
     } else {
-      if (response.errors) {
+      const errors = JSON.parse(response.message)
+      if (errors) {
         setError()
-        if (response.errors.nit) {
-          setMessageDescription(response.errors.description[0])
+        if (errors.descripcion) {
+          setMessageDescription(errors.descripcion)
         }
-        if (response.errors.code) {
-          setMessageDescription(response.errors.code[0])
-        }
-        if (response.errors.company) {
-          setMessageCode(response.errors.company[0])
+        if (errors.codigo) {
+          setMessageCode(errors.codigo)
         }
       }
       if (response.message) {
@@ -103,7 +67,6 @@ const CreateItemComponent = () => {
       }
     }
     setCompanies(companiesTemp)
-    alert(companies[0].value)
   }
 
   useEffect(() => {
@@ -129,7 +92,6 @@ const CreateItemComponent = () => {
                   onChange={(event) => {
                     setDescription(event.target.value)
                     setMessageDescription('')
-                    //verifyNit(event.target.value)
                   }}
                   value={description}
                 />
@@ -141,24 +103,22 @@ const CreateItemComponent = () => {
                   onChange={(event) => {
                     setCode(event.target.value)
                     setMessageCode('')
-                    //verifyCompany(event.target.value)
                   }}
                   value={code}
                 />
                 <SelectTable
-                messageInvalid={messageCompany}
+                messageInvalid={""}
                 title='Empresa'
                 options={companies}
                 value={company}
                 onChange={(event) => {
                   setMessageError('')
-                  setCompany(event.target.value)
                 }}
               />
               </Form>
             </Col>
           </Row>
-          <TableActions toBack='/item' submit={submit} disabled={disableSubmit} />
+          <TableActions toBack='/item' submit={submit}  />
         </CardBody>
       </Card>
     </>

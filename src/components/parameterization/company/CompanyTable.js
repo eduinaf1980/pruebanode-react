@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Table } from 'reactstrap';
-import ModalAlert from '../../ModalAlert';
+import ModalAlert from '../../utils/ModalAlert';
 import ActionsComponent from '../../utils/ActionsComponent';
 import API from '../../../api'
-import { CheckTable } from '../../utils/ComponentTable';
 import PaginationComponent from '../../utils/Pagination';
-import { ComponentActions } from '../../ComponentActions';
+import { ComponentActions } from '../../utils/ComponentActions';
 
 
 const CompanyTable = () => {
   let navigate = useNavigate()
   const [confirmBoth, setConfirmBoth] = useState(false)
   const [companies, setCompanies] = useState([])
-  const [page, setPage] = useState(0)
   const [query, setQuery] = useState('')
 
   const filterAll = async () => {
@@ -25,37 +23,15 @@ const CompanyTable = () => {
     }
   }
 
-  const handleNext = () => {
-    if (companies.length === 10) {
-      const pageTemp = page + 1
-      setPage(pageTemp)
-      filterAll()
-    }
-  }
-
-  const handleBack = () => {
-    if (page > 0) {
-      const pageTemp = page - 1
-      setPage(pageTemp)
-      filterAll()
-    }
-  }
-
   const deleteCompany = async (nit) => {
     const response = await API.Company.delete(nit)
-    if(response){
+    if (response) {
       filterAll()
     }
-  }
-
-
-  const setMessageSuccess = () => {
-    //setTimeout(() => { dispatch(actionSetMessageSuccess(''))  }, 2000)       
   }
 
   useEffect(() => {
     filterAll()
-    setMessageSuccess()
   }, [])
 
   return (
@@ -63,14 +39,13 @@ const CompanyTable = () => {
       <ComponentActions
         title='Compañías'
         to='/companies/create'
+        pdf='false'
         value={query}
-        //onClick={() => handleSearch(query, page)}
         onChange={(event) => setQuery(event.target.value)}
         clear={() => {
           filterAll()
           setQuery('')
         }}
-        //submitKey={() => handleSearch(query, page)}
       />
       <ModalAlert confirmBoth={confirmBoth} setConfirmBoth={setConfirmBoth} />
       <Card>
@@ -106,9 +81,6 @@ const CompanyTable = () => {
         </div>
         <div className='pagination justify-content-end mt-4 pagination-md'>
           <PaginationComponent
-            page={page}
-            next={() => handleNext()}
-            back={() => handleBack()}
           />
         </div>
       </Card>

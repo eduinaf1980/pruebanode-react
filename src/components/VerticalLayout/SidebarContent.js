@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import MetisMenu from 'metismenujs';
 import { LinkTo } from './LinkTo';
+import { getItem } from '../../utils/index'
 
 const SidebarContent = () => {
 
@@ -56,10 +57,6 @@ const SidebarContent = () => {
     return false
   }
 
-  const redirect = () => {
-    window.location = 'http://127.0.0.1:4000/dashboard'
-  }
-
   return (
     <React.Fragment>
       <div id='sidebar-menu'>
@@ -71,17 +68,18 @@ const SidebarContent = () => {
               <span>Inicio</span>
             </Link>
           </li>
-          <li>
-            <Link to="/#" className="has-arrow waves-effect hoverLi">
-              <i className="mdi mdi-brightness-5 color-maxim" />
-              <span>Parametrización</span>
-            </Link>
-            <ul className="sub-menu">
-              <LinkTo to='/companies' text='Compañías' />
-              <LinkTo to='/item' text='Items' />
-              <LinkTo to='/users' text='Usuarios' />         
-            </ul>
-          </li>
+          {(getItem('type') == 1) &&
+            <li>
+              <Link to="/#" className="has-arrow waves-effect hoverLi">
+                <i className="mdi mdi-brightness-5 color-maxim" />
+                <span>Parametrización</span>
+              </Link>
+              <ul className="sub-menu">
+                <LinkTo to='/companies' text='Compañías' />
+                <LinkTo to='/item' text='Items' />
+              </ul>
+            </li>
+          }
         </ul>
       </div>
     </React.Fragment>

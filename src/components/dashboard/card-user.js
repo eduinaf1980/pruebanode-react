@@ -5,7 +5,6 @@ import {
   Card,
   CardBody
 } from "reactstrap";
-import API from '../../api/dashboard/cardUser'
 import { getItem } from '../../utils/index';
 
 const CardUser = (props) => {

@@ -26,40 +26,10 @@ const CreateCompanyComponent = () => {
   const [disableSubmit, setDisableSubmit] = useState(false)
   const [messageError, setMessageError] = useState('')
 
-  const verifyNit = async (nit) => {
-    setDisableSubmit(false)
-
-    if (nit) {
-      const response = await API.Company.verifyNit(nit)
-
-      if (!response.ok) {
-        setMessageNit(response.message)
-        setDisableSubmit(true)
-      }
-    }
-  }
-
-  const verifyCompany = async (name) => {
-    setDisableSubmit(false)
-
-    if (name) {
-      const response = await API.Company.verifyCompany(name)
-
-      if (!response.ok) {
-        setMessageName(response.message)
-        setDisableSubmit(true)
-      }
-    }
-  }
-
-  const setMessageSuccess = (messageSuccess) => {
-    //dispatch(actionSetMessageSuccess(messageSuccess))
-  }
 
   const submit = async () => {
     setMessageName('')
     setMessageNit('')
-    setMessageSuccess('')
     const response = await API.Company.create({
       'nit': nit,
       'name': name,
@@ -67,22 +37,22 @@ const CreateCompanyComponent = () => {
       'phone': phone
     })
     if (response.ok) {
-      setMessageSuccess(response.message)
       navigate('/companies')
     } else {
-      if (response.errors) {
+      const errors = JSON.parse(response.message)
+      if (errors) {
         setError()
-        if (response.errors.nit) {
-          setMessageNit(response.errors.nit[0])
+        if (errors.nit) {
+          setMessageNit(errors.nit)
         }
-        if (response.errors.name) {
-          setMessageName(response.errors.name[0])
+        if (errors.nombre) {
+          setMessageName(errors.nombre)
         }
-        if (response.errors.address) {
-          setMessageName(response.errors.address[0])
+        if (errors.direccion) {
+          setMessageAddress(errors.direccion)
         }
-        if (response.errors.phone) {
-          setMessageName(response.errors.phone[0])
+        if (errors.telefono) {
+          setMessagePhone(errors.telefono)
         }
       }
       if (response.message) {
@@ -117,7 +87,6 @@ const CreateCompanyComponent = () => {
                   onChange={(event) => {
                     setNit(event.target.value)
                     setMessageNit('')
-                    //verifyNit(event.target.value)
                   }}
                   value={nit}
                 />
@@ -129,7 +98,6 @@ const CreateCompanyComponent = () => {
                   onChange={(event) => {
                     setName(event.target.value)
                     setMessageName('')
-                    //verifyCompany(event.target.value)
                   }}
                   value={name}
                 />

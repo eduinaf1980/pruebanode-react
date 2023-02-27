@@ -33,7 +33,7 @@ const NavBar = (props) => {
     let currentage = capitalizeFirstLetter(location.pathname)
 
     document.title =
-      currentage + " | Skote - Responsive Bootstrap 4 Admin Dashboard"
+      currentage + " | Prueba React + Nodejs"
     if (props.leftSideBarTheme) {
       props.changeSidebarTheme(props.leftSideBarTheme)
     }

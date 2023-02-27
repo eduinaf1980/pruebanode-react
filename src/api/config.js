@@ -7,15 +7,6 @@ export const configWithToken = () => {
     }
   })
 }
-
-export const configWithTokenAndMultipart = () => {
-  return ({headers: {
-    ...configWithToken().headers,
-    'contentType': 'multipart/form-data'
-  }})
-}
-
 export default {
   configWithToken,
-  configWithTokenAndMultipart
 }

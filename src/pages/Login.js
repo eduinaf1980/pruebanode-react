@@ -1,7 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Row, Col, CardBody, Card, Container } from "reactstrap";
-import profile from "../assets/images/logo-maxim.png";
 import API from '../api/index';
 import { setItem } from '../utils/index';
 import IconButton from "@material-ui/core/IconButton";
@@ -39,7 +38,7 @@ const Login = () => {
       setIsError(true)
     }
   }
-  
+
   return (
     <React.Fragment>
       <div className="account-pages my-5 pt-sm-5">
@@ -97,7 +96,7 @@ const Login = () => {
                             }}
                             onKeyDown={(event) => {
                               if (event.key === 'Enter') {
-                                submit()                        
+                                submit()
                               }
                             }}
                             endAdornment={
@@ -125,7 +124,6 @@ const Login = () => {
                     </div>
                   </div>
                   <div className='text-center'>
-                    
                   </div>
                 </CardBody>
               </Card>

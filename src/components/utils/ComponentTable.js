@@ -48,7 +48,6 @@ export const InputTable = (props) => {
       )}
     </FormGroup>
   )
-
 }
 
 export const DateTable = (props) => {

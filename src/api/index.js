@@ -1,11 +1,9 @@
-import Auth from './auth'
-import User from './parametrizacion/user'
+import Auth from './login/auth'
 import Company from './parametrizacion/company'
 import Item from './parametrizacion/item'
 
 const API = {
     Auth,
-    User,
     Company,
     Item
 }

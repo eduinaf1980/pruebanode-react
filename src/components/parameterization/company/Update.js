@@ -7,12 +7,11 @@ import {
   Form
 } from 'reactstrap';
 import TableTitle from '../../utils/TableTitle';
-import { InputTable, SwitchUpdate } from '../../utils/ComponentTable';
+import { InputTable } from '../../utils/ComponentTable';
 import API from '../../../api/index';
 import { useParams } from 'react-router-dom';
 import ActionsUpdate from '../../utils/ActionsUpdate';
 import { useNavigate } from 'react-router-dom';
-import { AlternateEmail } from '@material-ui/icons';
 
 
 const UpdateCompanyComponent = () => {
@@ -30,7 +29,7 @@ const UpdateCompanyComponent = () => {
 
   const getCompany = async () => {
     const response = await API.Company.get({
-      'nit':  params.nit,
+      'nit': params.nit,
     })
     if (response.ok) {
       setNit(response.result.nit)
@@ -40,14 +39,9 @@ const UpdateCompanyComponent = () => {
     }
   }
 
-  const setMessageSuccess = (messageSuccess) => {
-    //dispatch(actionSetMessageSuccess(messageSuccess))
-  }
-
   const submit = async () => {
     setMessageName('')
     setMessageNit('')
-    setMessageSuccess('')
     const response = await API.Company.update({
       'nit': nit,
       'name': name,
@@ -55,16 +49,22 @@ const UpdateCompanyComponent = () => {
       'phone': phone,
     })
     if (response.ok) {
-      setMessageSuccess(response.message)
       navigate('/companies')
     } else {
-      if (response.errors) {
+      const errors = JSON.parse(response.message)
+      if (errors) {
         setError()
-        if (response.errors.name) {
-          setMessageName(response.errors.name[0])
+        if (errors.nit) {
+          setMessageNit(errors.nit)
         }
-        if (response.errors.nit) {
-          setMessageNit(response.errors.nit[0])
+        if (errors.nombre) {
+          setMessageName(errors.nombre)
+        }
+        if (errors.direccion) {
+          setMessageAddress(errors.direccion)
+        }
+        if (errors.telefono) {
+          setMessagePhone(errors.telefono)
         }
       }
       if (response.message) {
@@ -79,7 +79,6 @@ const UpdateCompanyComponent = () => {
       setMessageError('')
     }, 5000);
   }
-
 
   useEffect(() => {
     getCompany()

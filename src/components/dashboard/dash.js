@@ -1,25 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
-  Container,
   Row,
-  Col,
-  Card,
-  CardBody,
-  CardTitle,
-  Media,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  Table,
-  CardFooter,
-  Button,
+  Col
 } from "reactstrap";
 
 import CardUser from "./card-user";
 import General from "./general";
 import CardWelcome from "./card-welcome";
-import SimpleBar from "simplebar-react";
-import { Link } from "react-router-dom";
 import { getItem } from "../../utils/index";
 
 const Dash = (props) => {
@@ -28,12 +15,9 @@ const Dash = (props) => {
       <Row>
         <CardUser id={getItem("userId")} />
         <Col xl="8">
-          {/* card welcome */}
           <CardWelcome />
         </Col>
       </Row>
-
-      {/* Indicadores mantenimiento gerenciales */}
       <Row>
         <General />
       </Row>

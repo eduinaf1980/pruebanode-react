@@ -1,29 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Table } from 'reactstrap';
-import ModalAlert from '../../ModalAlert';
+import ModalAlert from '../../utils/ModalAlert';
 import ActionsComponent from '../../utils/ActionsComponent';
 import API from '../../../api'
-import { CheckTable } from '../../utils/ComponentTable';
 import PaginationComponent from '../../utils/Pagination';
-import { ComponentActions } from '../../ComponentActions';
+import { ComponentActions } from '../../utils/ComponentActions';
 
 
 const ItemTable = () => {
   let navigate = useNavigate()
   const [confirmBoth, setConfirmBoth] = useState(false)
   const [items, setItems] = useState([])
-  const [page, setPage] = useState(0)
   const [query, setQuery] = useState('')
 
-  /*const handleSearch = async (query, page) => {
-    if (query) {
-      const response = await API.Company.filterSearch(query, page)
-      if (response.result) {
-        setCompanies(response.result)
-      }
-    }
-  }*/
 
   const filterAll = async () => {
     const response = await API.Item.all()
@@ -34,22 +24,6 @@ const ItemTable = () => {
     }
   }
 
-  const handleNext = () => {
-    if (items.length === 10) {
-      const pageTemp = page + 1
-      setPage(pageTemp)
-      filterAll()
-    }
-  }
-
-  const handleBack = () => {
-    if (page > 0) {
-      const pageTemp = page - 1
-      setPage(pageTemp)
-      filterAll()
-    }
-  }
-
   const deleteItem = async (id) => {
     const response = await API.Item.delete(id)
     if(response){
@@ -57,14 +31,8 @@ const ItemTable = () => {
     }
   }
 
-
-  const setMessageSuccess = () => {
-    //setTimeout(() => { dispatch(actionSetMessageSuccess(''))  }, 2000)       
-  }
-
   useEffect(() => {
     filterAll()
-    setMessageSuccess()
   }, [])
 
   return (
@@ -72,14 +40,13 @@ const ItemTable = () => {
       <ComponentActions
         title='Items'
         to='/item/create'
+        pdf='true'
         value={query}
-        //onClick={() => handleSearch(query, page)}
         onChange={(event) => setQuery(event.target.value)}
         clear={() => {
           filterAll()
           setQuery('')
         }}
-        //submitKey={() => handleSearch(query, page)}
       />
       <ModalAlert confirmBoth={confirmBoth} setConfirmBoth={setConfirmBoth} />
       <Card>
@@ -100,7 +67,7 @@ const ItemTable = () => {
                   <th onClick={() => navigate(`/item/update/${value.id}`)} scope='row'> {value.id} </th>
                   <td onClick={() => navigate(`/item/update/${value.id}`)}> {value.description} </td>
                   <td onClick={() => navigate(`/item/update/${value.id}`)}> {value.code} </td>
-                  <td onClick={() => navigate(`/item/update/${value.nit}`)}> {value.companies_id} </td>
+                  <td onClick={() => navigate(`/item/update/${value.nit}`)}> {value.company.name} </td>
                   <ActionsComponent
                     setConfirmBoth={setConfirmBoth}
                     id={value.nit}
@@ -115,9 +82,6 @@ const ItemTable = () => {
         </div>
         <div className='pagination justify-content-end mt-4 pagination-md'>
           <PaginationComponent
-            page={page}
-            next={() => handleNext()}
-            back={() => handleBack()}
           />
         </div>
       </Card>

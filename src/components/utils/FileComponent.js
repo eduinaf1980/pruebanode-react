@@ -57,6 +57,9 @@ const FileComponent = ({
                 </Button>
               </Col>
             </Row>
+            <Row>
+              * El pdf no debe tener mas 2 Mb
+            </Row>
           </Col>
         </Row>
       </Col>

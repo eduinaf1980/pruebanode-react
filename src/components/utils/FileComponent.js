@@ -14,10 +14,18 @@ const FileComponent = ({
   }, []);
 
   const getFiles = (file) => {
-    setFile({
-      name_file: file.name,
-      base64: file.base64,
-    });
+    const cad = file.name.split('.')
+    const size = file.size.split(' ')
+    if((cad[cad.length - 1]=="pdf") && (parseInt(size) <= 2048)){
+      setFile({
+        name_file: file.name,
+        base64: file.base64,
+      });
+    }else{
+      setFile({})
+      alert("El archivo debe ser pdf y no pesar mas de 2Mb")
+    }
+    
   };
 
   let file_name = "Seleccione un archivo";
@@ -56,9 +64,6 @@ const FileComponent = ({
                   Subir
                 </Button>
               </Col>
-            </Row>
-            <Row>
-              * El pdf no debe tener mas 2 Mb
             </Row>
           </Col>
         </Row>

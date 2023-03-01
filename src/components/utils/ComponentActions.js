@@ -24,14 +24,19 @@ export const ComponentActions = (props) => {
 
 
   const submit = async () => {
-    const response = await API.Email.addFile({
-      fil: file,
-      mail: email
-    })
-    if (response.ok) {
-      alert(response.message)
-      close()
+    if((email!="")&&(file!={})){
+      const response = await API.Email.addFile({
+        fil: file,
+        mail: email
+      })
+      if (response.ok) {
+        alert(response.message)
+        close()
+      }
+    }else{
+      alert("El formulario debe diligenciarse completo")
     }
+
   }
 
   const close = async () => {
@@ -97,6 +102,9 @@ export const ComponentActions = (props) => {
                   setFileId={setFileId}
                 />
               </Row>
+              <Row>
+              * El pdf no debe tener mas 2 Mb
+            </Row>
             </CardBody>
           </Card>
           <div className="modal-footer">

@@ -75,7 +75,6 @@ const UpdateItemComponent = () => {
       }
     }
     setCompanies(companiesTemp)
-    alert(companies[0].value)
   }
 
   useEffect(() => {

@@ -14,7 +14,6 @@ const DocPdf = () => {
         const response = await API.Item.all()
         if (response.result) {
           setItems(response.result)
-          console.log(response.result)
         } else {
           setItems([])
         }

@@ -13,8 +13,7 @@ const ItemTable = () => {
   const [confirmBoth, setConfirmBoth] = useState(false)
   const [items, setItems] = useState([])
   const [query, setQuery] = useState('')
-
-
+  
   const filterAll = async () => {
     const response = await API.Item.all()
     if (response.result) {

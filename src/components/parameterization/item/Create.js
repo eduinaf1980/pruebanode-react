@@ -12,7 +12,6 @@ import TableActions from '../../utils/TableActions';
 import API from '../../../api/index';
 import { useNavigate } from 'react-router-dom';
 
-
 const CreateItemComponent = () => {
   let navigate = useNavigate()
   const [description, setDescription] = useState('')
@@ -113,6 +112,7 @@ const CreateItemComponent = () => {
                 value={company}
                 onChange={(event) => {
                   setMessageError('')
+                  setCompany(event.target.value)
                 }}
               />
               </Form>
